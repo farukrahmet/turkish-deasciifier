@@ -59,7 +59,7 @@ class CleanCommand(Clean):
                     p = pjoin(root, f)
                     try:
                         os.unlink(p)
-                    except OSError, e:
+                    except OSError as e:
                         print >> sys.stderr, 'could not clean %r: %s' % (p, e)
 
 CMDCLASS['clean'] = CleanCommand
@@ -90,12 +90,12 @@ try:# Check command is optional.
             import locale
             try:
                 locale.setlocale(locale.LC_ALL, 'C')
-            except locale.Error, e:
+            except locale.Error as e:
                 print >> sys.stderr, 'setlocale failed: %s' % (e,)
             w = FlakeChecker(tree, filename)
             w.messages.sort(lambda a, b: cmp(a.lineno, b.lineno))
             for warning in w.messages:
-                print warning
+                print(warning)
             return len(w.messages)
 
     def check_path(filename):
@@ -132,8 +132,8 @@ try:# Check command is optional.
             run_flake()
 
     CMDCLASS['check'] = CheckCommand
-except ImportError:
-    print >> sys.stderr, "couldn't found Pyflakes"
+except ImportError as e:
+    print(e)
 
 
 # ----------------------------------------------------------------------------
